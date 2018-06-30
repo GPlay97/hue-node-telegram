@@ -7,7 +7,7 @@
 const express = require('express'),
     app = express(),
     errors = require('./errors.json'),
-    config = require('./config.json'),
+    srv_config = require('./config.json'),
     bodyParser = require('body-parser'),
     hue = require('./hue.js'),
     telegram = require('./telegram.js');
@@ -28,6 +28,10 @@ app.use((req, res, next) => {
 
 // the request routes
 app.get('/bridges', hue.findBridges);
+app.get('/config', hue.getConfig);
+app.get('/lights', hue.getLights);
+app.post('/on', hue.turnOn);
+app.post('/off', hue.turnOff);
 
 // requested route doesn't exist
 app.use((req, res) => {
@@ -54,4 +58,4 @@ app.use(function onError(err, req, res, next) {
 telegram.startBot();
 
 // initialize the server
-app.listen(config.PORT, () => console.log('Server started on port ', config.PORT));
+app.listen(srv_config.PORT, () => console.log('Server started on port ', srv_config.PORT));

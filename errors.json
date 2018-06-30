@@ -7,8 +7,20 @@
         "code": 500,
         "message": "Internal server error. Your request could not be processed."
     },
-    "BRIDGETS_ERROR": {
+    "BRIDGETS_FIND_ERROR": {
         "code": 1000,
         "message": "Error trying to find bridges. Try again later and ensure that bridgets are configured correctly."
+    },
+    "BRIDGET_CONFIG_ERROR":  {
+        "code": 1100,
+        "message": "Error resolving the configuration from bridget. Ensure that bridget is correctly defined within configuration file."
+    },
+    "BRIDGET_LIGHTS_ERROR": {
+        "code": 1200,
+        "message": "Error retrieving the lights from bridge. Ensure that bridge is correctly defined within configuration file."
+    },
+    "LIGHT_STATE_SET_ERROR": {
+        "code": 1300,
+        "message": "Error on setting state for light bulb. Ensure that bulbs are available and bridge is setup correctly."
     }
 }
