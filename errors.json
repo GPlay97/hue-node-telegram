@@ -1,0 +1,14 @@
+{
+    "UNKNOWN_ROUTE": {
+        "code": 404,
+        "message": "Unknown route. Unable to handle request."
+    },
+    "INTERNAL_ERROR": {
+        "code": 500,
+        "message": "Internal server error. Your request could not be processed."
+    },
+    "BRIDGETS_ERROR": {
+        "code": 1000,
+        "message": "Error trying to find bridges. Try again later and ensure that bridgets are configured correctly."
+    }
+}

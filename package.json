@@ -1,0 +1,40 @@
+{
+  "name": "hue-node-telegram",
+  "version": "1.0.0",
+  "description": "Control the lights with Node.JS and your personal Telegram Bot!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GPlay97/hue-node-telegram.git"
+  },
+  "keywords": [
+    "hue",
+    "philips",
+    "home",
+    "automation",
+    "smart",
+    "home",
+    "node",
+    "javascript",
+    "telegram",
+    "bot",
+    "control",
+    "api"
+  ],
+  "author": "GPlay97",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/GPlay97/hue-node-telegram/issues"
+  },
+  "homepage": "https://github.com/GPlay97/hue-node-telegram#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "node-hue-api": "^2.4.2",
+    "node-telegram-bot-api": "^0.30.0"
+  }
+}
