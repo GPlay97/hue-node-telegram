@@ -41,7 +41,7 @@ const retrieveLights = (callback) => api.lights((err, lights) => callback(err, l
  * @param {Function} callback callback function
  */
 const setLightStates = (on, callback) => {
-    let state = hue.lightState.create()[((on) ? 'on' : 'off')]().white(154, 10),
+    let state = hue.lightState.create()[((on) ? 'on' : 'off')]().white(154, 100),
         processed = 0;
 
     retrieveLights((err, lightsRes) => {
