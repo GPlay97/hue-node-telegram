@@ -13,7 +13,7 @@ let api; // will be the initialized bridge as defined in config file
 /**
  * Ensures that api will be initialized
  */
-let initialize = () => {
+const initialize = () => {
     if (!api) api = new hue.HueApi(srv_config.HUE_BRIDGE_IP, srv_config.HUE_BRIDGE_USER);
 };
 
@@ -21,35 +21,35 @@ let initialize = () => {
  * Searches for available bridges
  * @param {Function} callback callback function
  */
-let searchBridges = (callback) => hue.nupnpSearch((err, bridges) => callback(err, bridges));
+const searchBridges = (callback) => hue.nupnpSearch((err, bridges) => callback(err, bridges));
 
 /**
  * Retrieves config from initialized bridge
  * @param {Function} callback callback function
  */
-let retrieveConfig = (callback) => api.getConfig((err, config) => callback(err, config));
+const retrieveConfig = (callback) => api.getConfig((err, config) => callback(err, config));
 
 /**
  * Retrieves linked lights from initialized bridge
  * @param {Function} callback callback function
  */
-let retrieveLights = (callback) => api.lights((err, lights) => callback(err, lights));
+const retrieveLights = (callback) => api.lights((err, lights) => callback(err, lights));
 
 /**
  * Sets the light states for all available lights - and turns them on or off
  * @param {Boolean} on whether or not lights should be turned on
  * @param {Function} callback callback function
  */
-let setLightStates = (on, callback) => {
-    let state = hue.lightState.create()[((on)? 'on' : 'off')]().white(154, 10),
+const setLightStates = (on, callback) => {
+    let state = hue.lightState.create()[((on) ? 'on' : 'off')]().white(154, 10),
         processed = 0;
-    
+
     retrieveLights((err, lightsRes) => {
-        if(!err && lightsRes && Array.isArray(lightsRes.lights)) {
+        if (!err && lightsRes && Array.isArray(lightsRes.lights)) {
             // iterate through each light to set state
             lightsRes.lights.forEach(light => {
                 api.setLightState(light.id, state, (err, set) => {
-                    if(++processed + 1 === lightsRes.lights.length) callback(err, set); // fire callback only on last light bulb
+                    if (++processed + 1 === lightsRes.lights.length) callback(err, set); // fire callback only on last light bulb
                 });
             });
         } else callback(err, null);
@@ -95,8 +95,6 @@ module.exports = {
      * @param {Object} res the server response
      */
     getConfig: (req, res) => {
-        // initialize first
-        initialize();
         // retrieve the config
         retrieveConfig((err, config) => {
             if (!err && config != null) res.json(config);
@@ -118,8 +116,6 @@ module.exports = {
      * @param {Object} res the server response
      */
     getLights: (req, res) => {
-        // initialize first
-        initialize();
         // retrieve the lights
         retrieveLights((err, lights) => {
             if (!err && lights != null) res.json(lights);
@@ -141,8 +137,6 @@ module.exports = {
      * @param {Object} res the server response
      */
     turnOn: (req, res) => {
-        // initialize first
-        initialize();
         // turn on all the lights
         setLightStates(true, (err, turnedOn) => {
             if (!err && turnedOn) res.json(turnedOn);
@@ -160,8 +154,6 @@ module.exports = {
      * @param {Object} res the server response 
      */
     turnOff: (req, res) => {
-        // initialize first
-        initialize();
         // turn off all the lights
         setLightStates(false, (err, turnedOff) => {
             if (!err && turnedOff) res.json(turnedOff);

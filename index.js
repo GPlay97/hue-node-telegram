@@ -54,6 +54,9 @@ app.use(function onError(err, req, res, next) {
     next(err);
 });
 
+// initialize the hue bridge
+hue.initialize();
+
 // start the Telegram Bot
 telegram.startBot();
 
