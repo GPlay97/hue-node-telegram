@@ -5,7 +5,7 @@
  * Telegram Bot listener and handler.
  */
 const TelegramBot = require('node-telegram-bot-api'),
-    srv_config = require('./config.json'),
+    srv_config = require('./../config.json'),
     hue = require('./hue.js'),
     bot = new TelegramBot(srv_config.TELEGRAM_TOKEN, {
         polling: true

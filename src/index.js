@@ -7,7 +7,7 @@
 const express = require('express'),
     app = express(),
     errors = require('./errors.json'),
-    srv_config = require('./config.json'),
+    srv_config = require('./../config.json'),
     bodyParser = require('body-parser'),
     hue = require('./hue.js'),
     telegram = require('./telegram.js');

@@ -5,7 +5,7 @@
  * The handling and routing for Hue-Philips automation that will be used for the requests and the Telegram Bot
  */
 const hue = require('node-hue-api'),
-    srv_config = require('./config.json'),
+    srv_config = require('./../config.json'),
     errors = require('./errors.json');
 
 let api; // will be the initialized bridge as defined in config file
