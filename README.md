@@ -22,7 +22,8 @@ The installation is quite easy. You need some prerequsites, before you can start
     "PORT": "1234",
     "TELEGRAM_TOKEN": "123abc",
     "HUE_BRIDGE_IP": "192.168.1.102",
-    "HUE_BRIDGE_USER": "abc123"
+    "HUE_BRIDGE_USER": "abc123",
+    "AUTHORIZED_TELEGRAM": ["userID1", "userID2"]
 }
 ```
 
@@ -32,6 +33,7 @@ PORT | The port the Node server will listen to. Should be >= 1024
 TELEGRAM_TOKEN | The API token from your Telegram Bot
 HUE_BRIDGE_IP | The ip address of your Philips Hue Bridge. If you do not know it, skip this and read on (can be explored later, so you can edit it later)
 HUE_BRIDGE_USER | The user API key of your Philips Hue Developer Account
+AUTHORIZED_TELEGRAM | List of allowed Telegram user IDs, that can use the Telegram commands (further information on the Telegram section below)
 
 3. Run `npm install` to automatically install all required dependencies.
 
@@ -84,6 +86,11 @@ It's dark in here.
 ### Telegram
 Now - try it with telegram.
 Currently there are only two commands supported. More will be added soon.
+Before you can use the Telegram Bot, you will need to whitelist your user ID - otherwise you are not allowed to use the commands.
+This prevents others from unauthorized access.
+To do so, enter your Telegram user ID within the `config.json` file within the `AUTHORIZED_TELEGRAM` array.
+If you do not know your ID, just try to use one of the listed commands below. 
+The bot will tell you, that you don't have permissions - and furthermore give you your user ID.
 
 #### Turn on the lights
 Send `/on` to your personal connected Telegram Bot.
