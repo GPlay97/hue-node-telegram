@@ -33,7 +33,9 @@ TELEGRAM_TOKEN | The API token from your Telegram Bot
 HUE_BRIDGE_IP | The ip address of your Philips Hue Bridge. If you do not know it, skip this and read on (can be explored later, so you can edit it later)
 HUE_BRIDGE_USER | The user API key of your Philips Hue Developer Account
 
-3. That's it. Now run `node index.js`. The server should start on your defined port.
+3. Run `npm install` to automatically install all required dependencies.
+
+4. That's it. Change in the `src` directory with `cd src`. Now run `node index.js`. The server should start on your defined port.
 
 ## Usage
 Generally it can be used in two ways. Currently there are only a few things you can do, but it will be extended. Stay tuned!
