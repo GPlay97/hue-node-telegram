@@ -15,6 +15,7 @@ const TelegramBot = require('node-telegram-bot-api'),
  * Checks if given telegram user is authorized to use the API
  * If not, user will receive a message
  * @param {String|Number} user the telegram user id
+ * @returns {Boolean} whether or not user is authorized
  */
 const isAuthorized = (user) => {
     if(!Array.isArray(srv_config.AUTHORIZED_TELEGRAM) || srv_config.AUTHORIZED_TELEGRAM.indexOf(user) === -1) {
