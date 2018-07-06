@@ -36,13 +36,25 @@ const retrieveConfig = (callback) => api.getConfig((err, config) => callback(err
 const retrieveLights = (callback) => api.lights((err, lights) => callback(err, lights));
 
 /**
- * Sets the light states for all available lights - and turns them on or off
- * @param {Boolean} on whether or not lights should be turned on
+ * Sets the light states for all available lights
+ * Currently supported: 
+ * - on / off
+ * - brightness
+ * @example setLightState({on: true, brightness: 12}, (err, set) => console.log(err, set));
+ * @param {Object} stateObj object containing instructions whether to turn on or off lights and which brightness should be used
  * @param {Function} callback callback function
  */
-const setLightStates = (on, callback) => {
-    let state = hue.lightState.create()[((on) ? 'on' : 'off')]().white(154, 100),
-        processed = 0;
+const setLightStates = (stateObj, callback) => {
+    if (typeof stateObj !== 'object' || stateObj == null) return callback(errors.MISSING_PARAMETERS.code, null);
+
+    let state, processed = 0;;
+
+    // we can't set all properties - otherwise light possibly shortly turn on when we want to turn it off
+    if (stateObj.on) {
+        state = hue.lightState.create().white(154, (
+            (parseInt(stateObj.brightness) >= 0 && parseInt(stateObj.brightness) <= 100) ? parseInt(stateObj.brightness) : 100
+        )).on();
+    } else state = hue.lightState.create().off();
 
     retrieveLights((err, lightsRes) => {
         if (!err && lightsRes && Array.isArray(lightsRes.lights)) {
@@ -137,8 +149,11 @@ module.exports = {
      * @param {Object} res the server response
      */
     turnOn: (req, res) => {
-        // turn on all the lights
-        setLightStates(true, (err, turnedOn) => {
+        // turn on all the lights and optionally set a brightness level (or 100% if not given)
+        setLightStates({
+            on: true,
+            brightness: req.body.brightness
+        }, (err, turnedOn) => {
             if (!err && turnedOn) res.json(turnedOn);
             else res.status(409).json({
                 error: {
@@ -155,7 +170,9 @@ module.exports = {
      */
     turnOff: (req, res) => {
         // turn off all the lights
-        setLightStates(false, (err, turnedOff) => {
+        setLightStates({
+            on: false
+        }, (err, turnedOff) => {
             if (!err && turnedOff) res.json(turnedOff);
             else res.status(409).json({
                 error: {

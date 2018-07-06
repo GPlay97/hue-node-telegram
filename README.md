@@ -110,11 +110,25 @@ Just as the bridges request, this will provide an array with objects inside cont
 
 #### Turn on the lights
 Let the magic happen now!
-Turn on the lights - currently all lights will be turned on - at 100% brightness (cold temperature) - will be modified soon.
+Turn on the lights - currently all lights will be turned on - brightness (cold temperature) - will be modified soon.
 
 `POST http://localhost:1234/on`
 
 Wow! That's bright!
+
+---
+You can specify a custom brightness level (0-100).
+If no or invalid brightness level given, it will be set to 100%.
+
+If you want to specify a brightness level, send this within the body as application/json.
+
+```JSON
+{
+    "brightness": 15
+}
+```
+---
+
 
 #### Turn off the lights
 Join the dark side!
@@ -135,6 +149,13 @@ The bot will tell you, that you don't have permissions - and furthermore give yo
 
 #### Turn on the lights
 Send `/on` to your personal connected Telegram Bot.
+
+---
+To set a custom brightness, specify your desired level (0-100) after the command.
+
+e.g. `/on 15`
+
+---
 
 #### Turn off the lights
 Send `/off`.

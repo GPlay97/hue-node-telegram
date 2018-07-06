@@ -40,9 +40,9 @@ const startBot = () => {
     /**
      * Will turn on all the lights and set the brightness
      */
-    bot.onText(/\/on/, (msg, match) => {
+    bot.onText(/\/on\W*(\w+)?/i, (msg, match) => {
         if(!isAuthorized(msg.chat.id)) return; // check authentication
-        hue.setLightStates(true, (err, turnedOn) => {
+        hue.setLightStates({on: true, brightness: match[1]}, (err, turnedOn) => {
             bot.sendMessage(msg.chat.id, ((!err && turnedOn)? 'The lights has been turned on.' : 'There was an error.'));
         });
     });
@@ -51,7 +51,7 @@ const startBot = () => {
      */
     bot.onText(/\/off/, (msg, match) => {
         if(!isAuthorized(msg.chat.id)) return; // check authentication
-        hue.setLightStates(false, (err, turnedOff) => {
+        hue.setLightStates({on: false}, (err, turnedOff) => {
             bot.sendMessage(msg.chat.id, ((!err && turnedOff)? 'The lights has been turned off.' : 'There was an error.'));
         });
     });
