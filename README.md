@@ -22,7 +22,10 @@ The installation is quite easy. You need some prerequsites, before you can start
     "PORT": "1234",
     "TELEGRAM_TOKEN": "123abc",
     "HUE_BRIDGE_IP": "192.168.1.102",
-    "HUE_BRIDGE_USER": "abc123"
+    "HUE_BRIDGE_USER": "abc123",
+    "SESSION_SECRET": "somethingSecret",
+    "AUTHORIZED_TELEGRAM": ["userID1", "userID2"],
+    "AUTHORIZED_HASH": "someSHA512Hash"
 }
 ```
 
@@ -32,6 +35,9 @@ PORT | The port the Node server will listen to. Should be >= 1024
 TELEGRAM_TOKEN | The API token from your Telegram Bot
 HUE_BRIDGE_IP | The ip address of your Philips Hue Bridge. If you do not know it, skip this and read on (can be explored later, so you can edit it later)
 HUE_BRIDGE_USER | The user API key of your Philips Hue Developer Account
+SESSION_SECRET | The secret that will be used for sessions to use for the server authentication - replace with something random from your choice
+AUTHORIZED_TELEGRAM | List of allowed Telegram user IDs, that can use the Telegram commands (further information on the Telegram section below)
+AUTHORIZED_HASH | Password hash of your personal password to protect server requests (further information on the Server section below)
 
 3. Run `npm install` to automatically install all required dependencies.
 
@@ -42,6 +48,27 @@ Generally it can be used in two ways. Currently there are only a few things you 
 
 ### Server
 Port within the URL here needs to be replaced with your defined port. GET, POST are HTTP request types.
+To be able to use all of the requests to control your lights and to prevent unauthorized access, you will need to setup a password to protect the routes.
+To do so, you will need to run `node authentication.js` within the `src` directory.
+It will ask you for a password - just choose some (strong) password. After that, it outputs a password hash. 
+Copy the hash and insert it within the `config.json` file in the `AUTHORIZED_HASH` property.
+
+#### Login to authorize
+Before you can use any request to get further information about your bridge or lights or to be able to control them, first authenticate.
+
+To do so, you will need to create a session with this request (note that a session expires - and on restart of server, you will need to re-login).
+
+`POST http://localhost:1234/login`
+
+You will need to specify your password within the body as application/json
+```JSON
+{
+    "password": "yourPassword"
+}
+```
+
+
+If it succeeds, it will tell you, that you are now authenticated. If not, ensure that you have created the steps to get a password hash.
 
 #### Find local bridges
 If you want to retrieve a list of bridges near you (useful if you don't know the IP address of your Hue bridge), just send this request, while your server is running.
@@ -84,6 +111,11 @@ It's dark in here.
 ### Telegram
 Now - try it with telegram.
 Currently there are only two commands supported. More will be added soon.
+Before you can use the Telegram Bot, you will need to whitelist your user ID - otherwise you are not allowed to use the commands.
+This prevents others from unauthorized access.
+To do so, enter your Telegram user ID within the `config.json` file within the `AUTHORIZED_TELEGRAM` array.
+If you do not know your ID, just try to use one of the listed commands below. 
+The bot will tell you, that you don't have permissions - and furthermore give you your user ID.
 
 #### Turn on the lights
 Send `/on` to your personal connected Telegram Bot.
@@ -97,8 +129,8 @@ Both of them will interact same as their equivalent HTTP requests
 ## ToDo's
 More possibilites to control your lights will be added soon.
 You will then be able to control single lights, vary the brightness and so on.
-There will also be some authentication, to prevent unauthorized access.
 There will also be some automated server tests to ensure continuous integration.
+HTTPS support.
 
 ## Contributing
 More features will be added soon.

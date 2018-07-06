@@ -1,7 +1,19 @@
 {
+    "UNAUTHORIZED": {
+        "code": 401,
+        "message": "You are not authorized. First login to be able to proceed."
+    },
+    "INVALID_CREDENTIALS": {
+        "code": 401,
+        "message": "Invalid credentials."
+    },
     "UNKNOWN_ROUTE": {
         "code": 404,
         "message": "Unknown route. Unable to handle request."
+    },
+    "MISSING_PARAMETERS": {
+        "code": 422,
+        "message": "Missing or invalid parameters. Unable to handle request."
     },
     "INTERNAL_ERROR": {
         "code": 500,

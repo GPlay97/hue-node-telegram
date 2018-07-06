@@ -34,7 +34,9 @@
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "express": "^4.16.3",
+    "express-session": "^1.15.6",
     "node-hue-api": "^2.4.2",
-    "node-telegram-bot-api": "^0.30.0"
+    "node-telegram-bot-api": "^0.30.0",
+    "password-hash": "^1.2.2"
   }
 }
