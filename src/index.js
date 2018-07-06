@@ -5,10 +5,19 @@
  * The server main file, where server will be initialized to listen for requests and starting the Telegram Bot.
  */
 const express = require('express'),
+    fs = require('fs'),
     app = express(),
+    https = require('https'),
     session = require('express-session'),
     errors = require('./errors.json'),
     srv_config = require('./../config.json'),
+    httpsServer = ((srv_config.CHAIN_PATH &&
+        srv_config.PRIVATE_KEY_PATH &&
+        srv_config.CERTIFICATE_PATH) ? https.createServer({
+        ca: fs.readFileSync(srv_config.CHAIN_PATH, 'utf-8'),
+        key: fs.readFileSync(srv_config.PRIVATE_KEY_PATH, 'utf-8'),
+        cert: fs.readFileSync(srv_config.CERTIFICATE_PATH, 'utf-8')
+    }, app) : false),
     bodyParser = require('body-parser'),
     auth = require('./auth.js'),
     hue = require('./hue.js'),
@@ -20,7 +29,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: {
-        secure: false // only for http
+        secure: (httpsServer !== false)
     }
 }));
 
@@ -86,5 +95,6 @@ hue.initialize();
 // start the Telegram Bot
 telegram.startBot();
 
-// initialize the server
-app.listen(srv_config.PORT, () => console.log('Server started on port ', srv_config.PORT));
+// initialize the server (http or https)
+if (httpsServer) httpsServer.listen(srv_config.PORT, () => console.log('[HTTPS] Server started on port ', srv_config.PORT));
+else app.listen(srv_config.PORT, () => console.log('[HTTP] Server started on port ', srv_config.PORT));

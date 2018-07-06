@@ -2,3 +2,6 @@ config.json
 node_modules/
 package-lock.json
 .vscode/
+ca.crt
+cert.pem
+priv.pem
