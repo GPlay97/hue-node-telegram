@@ -25,7 +25,10 @@ The installation is quite easy. You need some prerequsites, before you can start
     "HUE_BRIDGE_USER": "abc123",
     "SESSION_SECRET": "somethingSecret",
     "AUTHORIZED_TELEGRAM": ["userID1", "userID2"],
-    "AUTHORIZED_HASH": "someSHA512Hash"
+    "AUTHORIZED_HASH": "someSHA512Hash",
+    "CHAIN_PATH": "",
+    "PRIVATE_KEY_PATH": "",
+    "CERTIFICATE_PATH": ""
 }
 ```
 
@@ -38,6 +41,9 @@ HUE_BRIDGE_USER | The user API key of your Philips Hue Developer Account
 SESSION_SECRET | The secret that will be used for sessions to use for the server authentication - replace with something random from your choice
 AUTHORIZED_TELEGRAM | List of allowed Telegram user IDs, that can use the Telegram commands (further information on the Telegram section below)
 AUTHORIZED_HASH | Password hash of your personal password to protect server requests (further information on the Server section below)
+CHAIN_PATH | Required, if you want to support HTTPS. The path to the chain file
+PRIVATE_KEY_PATH | Required, if you want to support HTTPS. The path to the private key file path
+CERTIFICATE_PATH | Required, if you want to support HTTPS. The path to the certificate file path
 
 3. Run `npm install` to automatically install all required dependencies.
 
@@ -48,6 +54,16 @@ Generally it can be used in two ways. Currently there are only a few things you 
 
 ### Server
 Port within the URL here needs to be replaced with your defined port. GET, POST are HTTP request types.
+
+---
+The server runs locally, as well as your Hue bridge by default.
+So it's only reachable from your local network.
+If you decide to forward the port from server, ensure to use HTTPS.
+
+To do so, provide the required files within the `config.json` file, as declared above.
+
+---
+
 To be able to use all of the requests to control your lights and to prevent unauthorized access, you will need to setup a password to protect the routes.
 To do so, you will need to run `node authentication.js` within the `src` directory.
 It will ask you for a password - just choose some (strong) password. After that, it outputs a password hash. 
